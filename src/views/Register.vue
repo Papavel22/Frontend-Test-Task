@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-container>
+      <h1>Register page</h1>
       <v-form
         ref="form"
         v-model="valid"
-        lazy-validation
       >
         <v-text-field
           v-model="email"

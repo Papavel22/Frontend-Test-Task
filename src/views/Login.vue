@@ -1,11 +1,7 @@
 <template>
   <div>
     <v-container>
-      <v-row justify="center">
-        <v-col
-          cols = 12
-          md="4"
-        >
+      <h1>Login page</h1>
           <v-form
             ref="form"
             v-model="valid"
@@ -40,15 +36,11 @@
               Login
             </v-btn>
           </v-form>
-        </v-col>
-      </v-row>
     </v-container>
   </div>
 </template>
 
 <script>
-// import * as firebase from 'firebase/app'
-// import 'firebase/auth'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {

@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import auth from './middleware/auth'
+import unAuth from './middleware/unAuth'
+import middlewarePipeline from './middleware/middlewarePipeline'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -24,12 +26,32 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/Login.vue')
+    component: () => import('../views/Login.vue'),
+    meta: {
+      middleware: [
+        unAuth
+      ]
+    }
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('../views/Profile.vue'),
+    meta: {
+      middleware: [
+        auth
+      ]
+    }
   },
   {
     path: '/register',
     name: 'Register',
-    component: () => import('../views/Register.vue')
+    component: () => import('../views/Register.vue'),
+    meta: {
+      middleware: [
+        unAuth
+      ]
+    }
   }
 ]
 
@@ -51,7 +73,8 @@ router.beforeEach((to, from, next) => {
     store
   }
   return middleware[0]({
-    ...context
+    ...context,
+    next: middlewarePipeline(context, middleware, 1)
   })
 })
 

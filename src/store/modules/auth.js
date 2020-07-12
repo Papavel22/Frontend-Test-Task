@@ -9,8 +9,8 @@ export default {
   },
   getters: {
     getAuthStatus: (state) => state.authStatus,
-    getError: (state) => state.error,
-    getUser: (state) => state.user
+    getError: (state) => state.error
+    // getUser: (state) => state.user
   },
   mutations: {
     confirmAuth (state) {
@@ -24,19 +24,19 @@ export default {
     },
     clearError (state) {
       state.error = ''
-    },
-    setUserData (state, userData) {
-      state.user = userData || ''
     }
+    // setUserData (state, userData) {
+    //   state.user = userData || ''
+    // }
   },
   actions: {
     async signIn ({ commit, dispatch }, { email, password }) {
       dispatch('loader/toggleLoader', null, { root: true })
       try {
         await Auth.signIn(email, password)
-        dispatch('loader/toggleLoader', null, { root: true })
         commit('confirmAuth')
-        dispatch('updateUserData')
+        dispatch('loader/toggleLoader', null, { root: true })
+        dispatch('user/updateUserData', null, { root: true })
       } catch (e) {
         dispatch('loader/toggleLoader', null, { root: true })
         commit('setError', e)
@@ -47,9 +47,9 @@ export default {
       dispatch('loader/toggleLoader', null, { root: true })
       try {
         await Auth.signUp(email, password)
-        dispatch('loader/toggleLoader', null, { root: true })
         commit('confirmAuth')
-        dispatch('updateUserData')
+        dispatch('loader/toggleLoader', null, { root: true })
+        dispatch('user/updateUserData', null, { root: true })
       } catch (e) {
         dispatch('loader/toggleLoader', null, { root: true })
         commit('setError', e)
@@ -61,20 +61,20 @@ export default {
       try {
         await Auth.logOut()
         dispatch('loader/toggleLoader', null, { root: true })
-        dispatch('updateUserData')
+        dispatch('user/updateUserData', null, { root: true })
         commit('rejectAuth')
       } catch (e) {
         dispatch('loader/toggleLoader', null, { root: true })
       }
     },
-    async updateUserData ({ commit }) {
-      try {
-        const user = await Auth.getUser()
-        commit('setUserData', user)
-      } catch (e) {
-        console.log(e)
-      }
-    },
+    // async updateUserData ({ commit }) {
+    //   try {
+    //     const user = await Auth.getUser()
+    //     commit('setUserData', user)
+    //   } catch (e) {
+    //     console.log(e)
+    //   }
+    // },
     clearError ({ commit }) {
       commit('clearError')
     }

@@ -24,16 +24,6 @@ export default {
     setInterval(_ => {
       this.date = DateTime.local().toFormat(this.timeFormat)
     }, 1000)
-  },
-  methods: {
-    setDate () {
-      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
-      this.date = `
-      ${new Date().getDate()}
-      ${months[new Date().getMonth()]}
-      ${new Date().getFullYear()}
-      ${(new Date().getHours())}:${(new Date().getMinutes())}:${(new Date().getSeconds())}`
-    }
   }
 }
 </script>
